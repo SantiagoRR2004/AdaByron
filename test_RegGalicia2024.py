@@ -138,7 +138,7 @@ Mejor nos vamos de cena o algo\n""",
             output, error = runFile.run_script("RegGalicia2024G.py", test["input"])
             self.assertEqual(output, test["output"])
 
-    def test_H(self):
+    def test_H_1(self):
         tests = [
             {
                 "input": """3 3
@@ -149,14 +149,59 @@ E W x
 ES NS x
 x NE N
 0 0""",
-                "output": """SOLUCIONABLE
-NOSOLUCIONABLE\n""",
+                "output": "SOLUCIONABLE\nNOSOLUCIONABLE\n",
+            },
+            {
+                "input": """3 3
+NW NW x
+NES NESW W
+E W x
+0 0""",
+                "output": "SOLUCIONABLE\n",
+            },
+            {
+                "input": """2 3
+ES NS x
+x NE N
+0 0""",
+                "output": "NOSOLUCIONABLE\n",
             },
         ]
 
         for test in tests:
             output, error = runFile.run_script("RegGalicia2024H.py", test["input"])
             self.assertEqual(output, test["output"])
+
+    def test_H_2(self):
+        input = """3 3
+NW N x
+NES NESW W
+E W x
+0 0"""
+        solution = "NOSOLUCIONABLE\n"
+        output, error = runFile.run_script("RegGalicia2024H.py", input)
+        self.assertEqual(solution, output)
+
+    def test_H_3(self):
+        input = """3 3
+NW NW NW
+NW x NW
+NW NW NW
+0 0"""
+        solution = "NOSOLUCIONABLE\n"
+        output, error = runFile.run_script("RegGalicia2024H.py", input)
+        self.assertEqual(solution, output)
+
+    def test_H_4(self):
+        input = """4 4
+x x x x
+x NW NW x
+x NW NW x
+x x x x
+0 0"""
+        solution = "SOLUCIONABLE\n"
+        output, error = runFile.run_script("RegGalicia2024H.py", input)
+        self.assertEqual(solution, output)
 
     def test_I(self):
         tests = [
