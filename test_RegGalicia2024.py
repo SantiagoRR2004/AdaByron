@@ -203,6 +203,74 @@ x x x x
         output, error = runFile.run_script("RegGalicia2024H.py", input)
         self.assertEqual(solution, output)
 
+    def test_H_5(self):
+        input = """2 2
+NW NW
+NW NW
+0 0"""
+        solution = "SOLUCIONABLE\n"
+        output, error = runFile.run_script("RegGalicia2024H.py", input)
+        self.assertEqual(solution, output)
+
+    def test_H_6(self):
+        input = """1 2
+N N
+0 0"""
+        solution = "SOLUCIONABLE\n"
+        output, error = runFile.run_script("RegGalicia2024H.py", input)
+        self.assertEqual(solution, output)
+
+    def test_H_7(self):
+        input = """1 1
+x
+0 0"""
+        solution = "SOLUCIONABLE\n"
+        output, error = runFile.run_script("RegGalicia2024H.py", input)
+        self.assertEqual(solution, output)
+
+    def test_H_8(self):
+        input = """1 1
+N
+0 0"""
+        solution = "NOSOLUCIONABLE\n"
+        output, error = runFile.run_script("RegGalicia2024H.py", input)
+        self.assertEqual(solution, output)
+
+    def test_H_9(self):
+        input = """1 1
+NESW
+0 0"""
+        solution = "NOSOLUCIONABLE\n"
+        output, error = runFile.run_script("RegGalicia2024H.py", input)
+        self.assertEqual(solution, output)
+
+    def test_H_10(self):
+        input = """1 2
+N NW
+0 0"""
+        solution = "NOSOLUCIONABLE\n"
+        output, error = runFile.run_script("RegGalicia2024H.py", input)
+        self.assertEqual(solution, output)
+
+    def test_H_11(self):
+        input = """1 3
+N x N
+0 0"""
+        solution = "NOSOLUCIONABLE\n"
+        output, error = runFile.run_script("RegGalicia2024H.py", input)
+        self.assertEqual(solution, output)
+
+    def test_H_12(self):
+        input = """3 3
+x N x
+N NESW N
+x N x
+0 0"""
+        solution = "SOLUCIONABLE\n"
+        output, error = runFile.run_script("RegGalicia2024H.py", input)
+        self.assertEqual(solution, output)
+
+
     def test_I(self):
         tests = [
             {
