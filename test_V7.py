@@ -29,3 +29,39 @@ class TestV7(unittest.TestCase):
         for test in tests:
             output, error = runFile.run_script("746.py", test["input"])
             self.assertEqual(output, test["output"])
+
+    def test_747(self):
+        tests = [
+            {
+                "input": """4 5
+.X...
+.XX..
+..X..
+.....
+2 6
+...X..
+...X..
+0 0""",
+                "output": "SI\nNO\n",
+            },
+            {
+                "input": """4 5
+.X...
+.XX..
+..X..
+.....
+0 0""",
+                "output": "SI\n",
+            },
+            {
+                "input": """2 6
+...X..
+...X..
+0 0""",
+                "output": "NO\n",
+            },
+        ]
+
+        for test in tests:
+            output, error = runFile.run_script("747.py", test["input"])
+            self.assertEqual(output, test["output"])
