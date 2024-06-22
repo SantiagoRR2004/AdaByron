@@ -87,3 +87,33 @@ Buford 1
         for test in tests:
             output, error = runFile.run_script("748.py", test["input"])
             self.assertEqual(output, test["output"])
+
+    def test_750(self):
+        tests = [
+            {
+                "input": """1
+20
+506
+0""",
+                "output": "10\n21\n32\n",
+            },
+            {
+                "input": """1
+0""",
+                "output": "10\n",
+            },
+            {
+                "input": """20
+0""",
+                "output": "21\n",
+            },
+            {
+                "input": """506
+0""",
+                "output": "32\n",
+            },
+        ]
+
+        for test in tests:
+            output, error = runFile.run_script("750.py", test["input"])
+            self.assertEqual(output, test["output"])
