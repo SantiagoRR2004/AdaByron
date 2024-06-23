@@ -9,13 +9,15 @@ class TestV7(unittest.TestCase):
             {"input": "1\n000111", "output": "No girar\n"},
             {"input": "1\n0011", "output": "Da igual\n"},
             {"input": "2\n010101\n000111", "output": "Girar\nNo girar\n"},
-            {"input": "3\n010101\n000111\n0011", "output": "Girar\nNo girar\nDa igual\n"}
+            {
+                "input": "3\n010101\n000111\n0011",
+                "output": "Girar\nNo girar\nDa igual\n",
+            },
         ]
 
         for test in tests:
             output, error = runFile.run_script("742.py", test["input"])
             self.assertEqual(output, test["output"])
-
 
     def test_743(self):
         tests = [
@@ -130,4 +132,24 @@ Buford 1
 
         for test in tests:
             output, error = runFile.run_script("750.py", test["input"])
+            self.assertEqual(output, test["output"])
+
+    def test_751(self):
+        tests = [
+            {
+                "input": """4
+1756 1791 1770 1827
+1756 1791 1706 1790
+1642 1727 1769 1821
+1706 1790 1642 1727""",
+                "output": "22\n35\n0\n22\n",
+            },
+            {"input": "1\n1756 1791 1770 1827", "output": "22\n"},
+            {"input": "1\n1756 1791 1706 1790", "output": "35\n"},
+            {"input": "1\n1642 1727 1769 1821", "output": "0\n"},
+            {"input": "1\n1706 1790 1642 1727", "output": "22\n"},
+        ]
+
+        for test in tests:
+            output, error = runFile.run_script("751.py", test["input"])
             self.assertEqual(output, test["output"])
