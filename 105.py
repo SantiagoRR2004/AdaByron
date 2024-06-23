@@ -1,7 +1,7 @@
-#https://aceptaelreto.com/problem/statement.php?id=105
+# https://aceptaelreto.com/problem/statement.php?id=105
 
-days = ('MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO', 'DOMINGO')
-#datos = [float(x) for x in input().split("\n")]
+days = ("MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO")
+# datos = [float(x) for x in input().split("\n")]
 
 datos = []
 while True:
@@ -16,67 +16,32 @@ aux = []
 
 for i in range(0, len(datos), stride):
 
-    max = [0, 0] # value and index
-    min = [float('inf'), 0] # value and index
-    aux = datos[i:i+stride]
+    max = [0, 0]  # value and index
+    min = [float("inf"), 0]  # value and index
+    aux = datos[i : i + stride]
 
     for i in range(0, len(aux)):
         if aux[i] > max[0]:
             max = [aux[i], days[i]]
-        elif  aux[i] == max[0]:
-            max[1] = 'EMPATE'
+        elif aux[i] == max[0]:
+            max[1] = "EMPATE"
 
         if aux[i] < min[0]:
             min = [aux[i], days[i]]
-        elif  aux[i] == min[0]:
-            min[1] = 'EMPATE'
+        elif aux[i] == min[0]:
+            min[1] = "EMPATE"
 
-    mean = sum(aux)/stride
+    mean = sum(aux) / stride
 
     if mean < aux[-1]:
         s = "SI"
     else:
         s = "NO"
 
+    print(max[1] + " " + min[1] + " " + s)
 
-    print(max[1]+" "+min[1]+" "+s)
+"""
 
-# datos prueba
-'''
-185.50
-250.36
-163.45
-535.20
-950.22
-450.38
-185.50
-250.36
-163.45
-535.20
-950.22
-100.00
-185.50
-250.36
-185.50
-535.20
-950.22
-950.22
-185.50
-250.36
-163.45
-535.20
-950.22
-400.00
-185.50
-250.36
-165.50
-535.20
-950.22
-950.22
--1
-'''
-
-'''
 #include <iostream>
 #include <vector>
 #include <string>
@@ -136,10 +101,4 @@ int main() {
     return 0;
 }
 
-'''
-            
-
-
-
-        
-
+"""
