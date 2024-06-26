@@ -57,3 +57,14 @@ while nStones != 0:
         print("NO")
 
     nStones = int(input())
+
+"""
+Pista 1
+Suma todos los pesos y divide por dos para saber lo que tienes que poner en cada lado de la balanza.
+
+Pista 2
+Haz una función que mire si existe algún subconjunto de los pesos cuya suma sea un valor dado (la mitad del total).
+
+Pista 3
+El número máximo de pesos es pequeño. Puedes utilizar recursión aunque pueda haber algo de solapamiento.
+"""
