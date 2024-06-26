@@ -189,3 +189,32 @@ Buford 1
         for test in tests:
             output, error = runFile.run_script("752.py", test["input"])
             self.assertEqual(output, test["output"])
+
+    def test_754(self):
+        tests = [
+            {
+                "input": """lamentablemente
+rollo
+conocen
+reordenando
+ala
+palindromo""",
+                "output": """aeelmntbtnmleea
+lorol
+cnoeonc
+denoraroned
+ala
+NO HAY
+""",
+            },
+            {"input": "lamentablemente", "output": "aeelmntbtnmleea\n"},
+            {"input": "rollo", "output": "lorol\n"},
+            {"input": "conocen", "output": "cnoeonc\n"},
+            {"input": "reordenando", "output": "denoraroned\n"},
+            {"input": "ala", "output": "ala\n"},
+            {"input": "palindromo", "output": "NO HAY\n"},
+        ]
+
+        for test in tests:
+            output, error = runFile.run_script("754.py", test["input"])
+            self.assertEqual(output, test["output"])
