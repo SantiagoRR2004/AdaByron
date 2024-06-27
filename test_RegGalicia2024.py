@@ -36,7 +36,7 @@ class TestRegGalicia2024(unittest.TestCase):
             output, error = runFile.run_script("RegGalicia2024C.py", test["input"])
             self.assertEqual(output, test["output"])
 
-    def test_D(self):
+    def test_D_1(self):
         tests = [
             {
                 "input": """7 4 5
@@ -61,6 +61,39 @@ class TestRegGalicia2024(unittest.TestCase):
         for test in tests:
             output, error = runFile.run_script("RegGalicia2024D.py", test["input"])
             self.assertEqual(output, test["output"])
+
+    def test_D_2(self):
+        """
+        This test can't check if it is correct. I will just check if it runs without errors
+        and to see how long it takes to run."""
+
+        import random
+
+        def generar_ejemplo(numCromos, precioSobre):
+            # Generar precios aleatorios para los N cromos
+            precios_cromos = [random.randint(1, 1000) for _ in range(numCromos)]
+            cromosObtenidos = set()
+
+            # Generar descripciones aleatorias de sobres
+            sobres = []
+            while len(cromosObtenidos) < numCromos:
+                cromos_sobre = random.sample(range(1, numCromos + 1), 5)
+                sobres.append(cromos_sobre)
+                cromosObtenidos.update(cromos_sobre)
+
+
+            # La entrada generada
+            print(f"{numCromos} {len(sobres)} {precioSobre}")
+            print(" ".join(map(str, precios_cromos)))
+            for sobre in sobres:
+                print(" ".join(map(str, sobre)))
+
+        # Parámetros del ejemplo
+        N = 2000  # Cantidad de cromos en el álbum
+        P = 50  # Precio de cada sobre
+
+        for _ in range(20):
+            runFile.run_script("RegGalicia2024D.py", generar_ejemplo(N, P))
 
     def test_E(self):
         tests = [
