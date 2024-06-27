@@ -1,4 +1,4 @@
-#  https://aceptaelreto.com/problem/statement.php?id=743
+#  https://aceptaelreto.com/problem/statement.php?id=744
 
 import sys
 
