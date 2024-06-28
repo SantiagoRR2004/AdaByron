@@ -242,3 +242,23 @@ NO HAY
         for test in tests:
             output, error = runFile.run_script("755.py", test["input"])
             self.assertEqual(output, test["output"])
+
+    def test_756(self):
+        tests = [
+            {
+                "input": """1 2 3 4 5 6 7 8 9 10 11 12 13 15 14 16
+2 3 1 4 5 6 7 8 9 10 11 12 13 14 15 16
+2 3 1 4 5 6 7 8 9 10 11 12 13 15 14 16""",
+                "output": """NO
+SI
+NO
+""",
+            },
+            {"input": "1 2 3 4 5 6 7 8 9 10 11 12 13 15 14 16", "output": "NO\n"},
+            {"input": "2 3 1 4 5 6 7 8 9 10 11 12 13 14 15 16", "output": "SI\n"},
+            {"input": "2 3 1 4 5 6 7 8 9 10 11 12 13 15 14 16", "output": "NO\n"},
+        ]
+
+        for test in tests:
+            output, error = runFile.run_script("756.py", test["input"])
+            self.assertEqual(output, test["output"])
