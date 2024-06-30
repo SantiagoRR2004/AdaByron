@@ -280,3 +280,24 @@ TTTTTT""",
         for test in tests:
             output, error = runFile.run_script("757.py", test["input"])
             self.assertEqual(output, test["output"])
+
+    def test_758(self):
+        tests = [
+            {
+                "input": """3
+7
+9
+11""",
+                "output": """33 16
+45 36
+57 64
+""",
+            },
+            {"input": "1\n7", "output": "33 16\n"},
+            {"input": "1\n9", "output": "45 36\n"},
+            {"input": "1\n11", "output": "57 64\n"},
+        ]
+
+        for test in tests:
+            output, error = runFile.run_script("758.py", test["input"])
+            self.assertEqual(output, test["output"])
