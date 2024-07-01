@@ -301,3 +301,38 @@ TTTTTT""",
         for test in tests:
             output, error = runFile.run_script("758.py", test["input"])
             self.assertEqual(output, test["output"])
+
+    def test_759(self):
+        tests = [
+            {
+                "input": """4 2
+1 < 2
+1 > 2
+5 5
+3 < 4
+3 = 2
+2 < 5
+4 < 5
+3 = 2""",
+                "output": "TRAMPAS\nDESCONFIADO\n",
+            },
+            {
+                "input": """4 2
+1 < 2
+1 > 2""",
+                "output": "TRAMPAS\n",
+            },
+            {
+                "input": """5 5
+3 < 4
+3 = 2
+2 < 5
+4 < 5
+3 = 2""",
+                "output": "DESCONFIADO\n",
+            },
+        ]
+
+        for test in tests:
+            output, error = runFile.run_script("759.py", test["input"])
+            self.assertEqual(output, test["output"])
