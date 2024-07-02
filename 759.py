@@ -107,3 +107,37 @@ while i < len(data):
             print("TRAMPAS")
         else:
             print("DESCONFIADO")
+
+
+"""
+Pista 1
+Si nadie hace trampa, hay un único orden entre los participantes, 
+aunque es posible que no podamos conocerlo entero si nos faltan resultados comparados en la entrada.
+
+Pista 2
+Si no tenemos todos los resultados, la información que tenemos de los partipantes crea un orden parcial, 
+donde podremos decir en algunos casos que un participante es mejor que otro, pero no siempre.
+
+Pista 3
+Un orden parcial se puede representar con un grafo dirigido acíclico (DAG, por sus siglas en inglés).
+
+Pista 4
+Tenemos confirmación de que alguien hace trampa si usando la información del orden parcial 
+podemos demostrar que un participante A es mejor que otro participante B y, al mismo tiempo, que B es mejor que A.
+
+Pista 5
+Si alguien hace trampas no tendremos un orden parcial y en el grafo habrá al menos un ciclo.
+
+Pista 6
+Construye un grafo dirigido donde los nodos representen a los participantes y cada arista 
+indique que el participante asociado al nodo origen es mejor que el participante destino.
+Busca ciclos en el grafo para decidir qué contestar.
+
+Pista 7
+Los participantes que empaten son iguales en el orden parcial. Representalos en el grafo como un único nodo.
+
+Pista 8
+Antes de crear el grafo, agrupa a los participantes que empaten entre sí.
+Puedes utilizar la estructura de conjuntos disjuntos (union-find disjoint sets, UFDS)
+para tener un nodo representante de cada grupo y usarlo como origen y destino de todas las aristas de los nodos que representa.
+"""
