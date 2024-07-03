@@ -45,3 +45,25 @@ for _ in range(nCases):
         total += permutations(n, i) % MOD
 
     print(total % MOD)
+
+"""
+Pista 1
+Resolver el problema requiere ciertos conocimientos de combinatoria.
+
+Pista 2
+El número de códigos de desbloqueo para un tamaño del código T en una rejilla con P puntos
+son las variaciones de P elementos cogidos de T en T.
+
+Pista 3
+Las variaciones de P elementos cogidos de T en T son la multiplicación de todos los números entre P y P−T+1.
+
+Pista 4
+El resultado puede ser muy grande. Haz el módulo con el número primo del enunciado tras cada operación.
+
+Pista 5
+Si calculas las variaciones para cada tamaño de manera independiente tardarás demasiado tiempo.
+
+Pista 6
+Las variaciones de P elementos cogidos de T+1 en T+1 se puede calcular muy rápidamente
+si conoces las variaciones de P elementos cogidos de T en T.
+"""
