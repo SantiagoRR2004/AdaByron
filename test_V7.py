@@ -464,3 +464,23 @@ EXPLOSION
         for test in tests:
             output, error = runFile.run_script("761.py", test["input"])
             self.assertEqual(output, test["output"])
+
+    def test_762(self):
+        tests = [
+            {
+                "input": """500 200 250 400
+500 200 300 400
+200 500 400 300""",
+                "output": """NO
+SI
+SI
+""",
+            },
+            {"input": "500 200 250 400", "output": "NO\n"},
+            {"input": "500 200 300 400", "output": "SI\n"},
+            {"input": "200 500 400 300", "output": "SI\n"},
+        ]
+
+        for test in tests:
+            output, error = runFile.run_script("762.py", test["input"])
+            self.assertEqual(output, test["output"])
