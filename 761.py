@@ -87,3 +87,39 @@ while index < len(data):
         print("IMPOSIBLE")
     else:
         print(result)
+
+"""
+Pista 1
+Piensa cómo resolverías el problema si los agujeros de gusano nunca recargaran
+la nave y por tanto no pudiera ocurrir el caso EXPLOSION.
+
+Pista 2
+El problema se puede modelizar como un grafo dirigido,
+donde muchas aristas son implícitas, generadas por la vecindad de las celdas en el mapa.
+
+Pista 3
+Si los agujeros de gusano siempre consumieran energía,
+el problema se podría resolver con el algoritmo de Dijkstra para
+buscar el camino mínimo entre el origen y el destino.
+
+Pista 4
+El algoritmo de Dijkstra no funciona bien si hay aristas con pesos negativos.
+Busca una alternativa.
+
+Pista 5
+El algoritmo de Bellman–Ford calcula el camino más corto desde un 
+vértice de un grafo dirigido a todos los demás, 
+y soporta la existencia de aristas con pesos negativos.
+Permite además detectar la existencia de ciclos negativos
+que hacen que no haya un camino más corto porque éste puede
+siempre reducirse dando una vuelta más al ciclo.
+
+Pista 6
+Usa el algoritmo de Bellman-Ford para calcular el camino mínimo
+y detectar si hay algún ciclo negativo. Si lo hay, escribe EXPLOSION.
+
+Pista 7
+Para que Jessy caiga en un ciclo negativo y haga explotar las 
+baterías de su nave tiene que poder llegar a él. 
+No siempre que hay un ciclo negativo hay que escribir EXPLOSION.
+"""
