@@ -59,14 +59,10 @@ class DynamicTestCase(unittest.TestCase):
     pass
 
 
-# Test configurations.
-test_cases = [
-    "105",
-    "120",
-    # Add more test cases as needed.
-]
+# We find all the folders in the tests folder
+folders = os.listdir("tests")
 
-# Add methods to the TestCase class.
-for test_id in test_cases:
-    test_method = create_test_method(test_id)
-    setattr(DynamicTestCase, test_method.__name__, test_method)
+# Add methods to the DynamicTestCase class.
+for folderName in folders:
+    testMethod = create_test_method(folderName)
+    setattr(DynamicTestCase, testMethod.__name__, testMethod)
