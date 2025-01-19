@@ -127,6 +127,34 @@ Buford 1
                 "input": """506
 0""",
                 "output": "32\n",
+    def test_749(self):
+        tests = [
+            {
+                "input": """2 2 0
+2 2 2
+2 1 1 2
+6 6 12
+1 1 2 1 3 1 4 1 5 1 6 1 5 2 6 2 6 3 6 4 3 5 3 6
+0 0 0""",
+                "output": "4\n0\n35\n",
+            },
+            {
+                "input": """2 2 0
+0 0 0""",
+                "output": "4\n",
+            },
+            {
+                "input": """2 2 2
+2 1 1 2
+0 0 0""",
+                "output": "0\n",
+            },
+            {
+                "input": """6 6 12
+1 1 2 1 3 1 4 1 5 1 6 1 5 2 6 2 6 3 6 4 3 5 3 6
+0 0 0""",
+                "output": "35\n",
+
             },
         ]
 
@@ -327,3 +355,5 @@ TTTTTT""",
             self.assertEqual(output, output)
 
             
+            output, error = runFile.run_script("749.py", test["input"])
+            self.assertEqual(output, test["output"])
