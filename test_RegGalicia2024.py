@@ -231,7 +231,7 @@ NOSOLUCIONABLE\n""",
             output, error = runFile.run_script("RegGalicia2024J.py", test["input"])
             self.assertEqual(output, test["output"])
 
-    def test_K(self):
+    def test_K_1(self):
         tests = [
             {
                 "input": """aaeoollgg
@@ -245,6 +245,28 @@ geotermia
 gallego""",
                 "output": "gallega\n",
             },
+        ]
+
+        for test in tests:
+            output, error = runFile.run_script("RegGalicia2024K.py", test["input"])
+            self.assertEqual(output, test["output"])
+
+    def test_K_2(self):
+        tests = [
+            {
+                "input": """aa
+7
+gallega
+galleta
+argolla
+gazapo
+anilla
+geotermia
+gallego""",
+                "output": "No es posible\n",
+            },
+            {"input": "aa\n1\na", "output": "a\n"},
+            {"input": "ab\n5\naa\nbb\nba\naa\nab", "output": "ab\n"},
         ]
 
         for test in tests:
