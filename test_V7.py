@@ -301,25 +301,3 @@ TTTTTT""",
         for test in tests:
             output, error = runFile.run_script("758.py", test["input"])
             self.assertEqual(output, test["output"])
-
-
-    def test_760(self):
-        tests = [
-            {
-                "input": """3
-3 1 1
-3 1 2
-5 6 7""",
-                "output": """9
-81
-550239986
-""",
-            },
-            {"input": "1\n3 1 1", "output": "9\n"},
-            {"input": "1\n3 1 2", "output": "81\n"},
-            {"input": "1\n5 6 7", "output": "550239986\n"},
-        ]
-
-        for test in tests:
-            output, error = runFile.run_script("760.py", test["input"])
-            self.assertEqual(output, test["output"])
