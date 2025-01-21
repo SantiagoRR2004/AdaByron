@@ -104,29 +104,6 @@ Buford 1
             output, error = runFile.run_script("748.py", test["input"])
             self.assertEqual(output, test["output"])
 
-    def test_750(self):
-        tests = [
-            {
-                "input": """1
-20
-506
-0""",
-                "output": "10\n21\n32\n",
-            },
-            {
-                "input": """1
-0""",
-                "output": "10\n",
-            },
-            {
-                "input": """20
-0""",
-                "output": "21\n",
-            },
-            {
-                "input": """506
-0""",
-                "output": "32\n",
     def test_749(self):
         tests = [
             {
@@ -154,7 +131,36 @@ Buford 1
 1 1 2 1 3 1 4 1 5 1 6 1 5 2 6 2 6 3 6 4 3 5 3 6
 0 0 0""",
                 "output": "35\n",
+            },
+        ]
 
+        for test in tests:
+            output, error = runFile.run_script("749.py", test["input"])
+            self.assertEqual(output, test["output"])
+
+    def test_750(self):
+        tests = [
+            {
+                "input": """1
+20
+506
+0""",
+                "output": "10\n21\n32\n",
+            },
+            {
+                "input": """1
+0""",
+                "output": "10\n",
+            },
+            {
+                "input": """20
+0""",
+                "output": "21\n",
+            },
+            {
+                "input": """506
+0""",
+                "output": "32\n",
             },
         ]
 
@@ -330,7 +336,6 @@ TTTTTT""",
             output, error = runFile.run_script("758.py", test["input"])
             self.assertEqual(output, test["output"])
 
-            
     def test_745_1(self):
         tests = [
             {
@@ -353,7 +358,3 @@ TTTTTT""",
             output = f"{letter}\n"
             output, error = runFile.run_script("745.py", input)
             self.assertEqual(output, output)
-
-            
-            output, error = runFile.run_script("749.py", test["input"])
-            self.assertEqual(output, test["output"])
