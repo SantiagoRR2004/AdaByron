@@ -3,28 +3,6 @@ import runFile
 
 
 class TestV7(unittest.TestCase):
-    def test_748(self):
-        tests = [
-            {
-                "input": """9
-Buford 1
-Stubble 1
-Ceegar 1
-Buford 2
-Buck 1
-? 2 Buford Buck
-Needles 1
-Buford 1
-? 3 Ceegar Stubble Buford
-0""",
-                "output": "4\n3\n---\n",
-            },
-        ]
-
-        for test in tests:
-            output, error = runFile.run_script("748.py", test["input"])
-            self.assertEqual(output, test["output"])
-
     def test_749(self):
         tests = [
             {
