@@ -349,12 +349,3 @@ TTTTTT""",
         for test in tests:
             output, error = runFile.run_script("745.py", test["input"])
             self.assertEqual(output, test["output"])
-
-    def test_745_2(self):
-
-        alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        for letter in alphabet:
-            input = f"{alphabet.index(letter)+1} 0\n0"
-            output = f"{letter}\n"
-            output, error = runFile.run_script("745.py", input)
-            self.assertEqual(output, output)
