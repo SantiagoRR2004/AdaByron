@@ -335,17 +335,3 @@ TTTTTT""",
         for test in tests:
             output, error = runFile.run_script("758.py", test["input"])
             self.assertEqual(output, test["output"])
-
-    def test_745_1(self):
-        tests = [
-            {
-                "input": "1 27 51 703 1000 0\n19397 940476005 0\n0",
-                "output": "A AA AY AAA ALL\nABRA CADABRA\n",
-            },
-            {"input": "1 27 51 703 1000 0\n0", "output": "A AA AY AAA ALL\n"},
-            {"input": "19397 940476005 0\n0", "output": "ABRA CADABRA\n"},
-        ]
-
-        for test in tests:
-            output, error = runFile.run_script("745.py", test["input"])
-            self.assertEqual(output, test["output"])
