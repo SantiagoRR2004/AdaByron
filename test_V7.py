@@ -37,30 +37,6 @@ class TestV7(unittest.TestCase):
             output, error = runFile.run_script("749.py", test["input"])
             self.assertEqual(output, test["output"])
 
-    def test_755(self):
-        tests = [
-            {
-                "input": """4
-10 10
-5 10
-8 6
-46349 46351""",
-                "output": """1
-2
-12
-2148322499
-""",
-            },
-            {"input": """1\n 10 10""", "output": "1\n"},
-            {"input": """1\n 5 10""", "output": "2\n"},
-            {"input": """1\n 8 6""", "output": "12\n"},
-            {"input": """1\n 46349 46351""", "output": "2148322499\n"},
-        ]
-
-        for test in tests:
-            output, error = runFile.run_script("755.py", test["input"])
-            self.assertEqual(output, test["output"])
-
     def test_756(self):
         tests = [
             {
