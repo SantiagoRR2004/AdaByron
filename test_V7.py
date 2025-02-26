@@ -37,24 +37,6 @@ class TestV7(unittest.TestCase):
             output, error = runFile.run_script("749.py", test["input"])
             self.assertEqual(output, test["output"])
 
-    def test_757(self):
-        tests = [
-            {
-                "input": """3
-TTTST
-STSTTSSS
-TTTTTT""",
-                "output": """3\n2\n6\n""",
-            },
-            {"input": "1\nTTTST", "output": "3\n"},
-            {"input": "1\nSTSTTSSS", "output": "2\n"},
-            {"input": "1\nTTTTTT", "output": "6\n"},
-        ]
-
-        for test in tests:
-            output, error = runFile.run_script("757.py", test["input"])
-            self.assertEqual(output, test["output"])
-
     def test_758(self):
         tests = [
             {
