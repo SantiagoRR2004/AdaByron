@@ -1,36 +1,82 @@
 #  https://aceptaelreto.com/problem/statement.php?id=744
+# https://cs.stackexchange.com/questions/151112/greedy-algorithm-for-postive-interval-covering
 
 import sys
 
+while True:
+    line = sys.stdin.readline()
+    if not line:
+        # No mre inputs
+        break
+    time = int(line.strip())
 
-def calcular_min_mensajes(tiempo_max, felicitaciones):
-    # Inicializar contador de mensajes
     mensajes = 0
-    i = 0
-    n = len(felicitaciones)
+    limite = -1
 
-    while i < n:
-        # Incrementamos el contador de mensajes
-        mensajes += 1
-        # Determinamos el límite máximo para el siguiente agradecimiento
-        limite = felicitaciones[i] + tiempo_max
+    while True:
+        # Iterate this way to reduce memory usage
+        n = ""
+        while True:
+            char = sys.stdin.read(1)
+            if char == " " or char == "\n" or not char:
+                break
+            n += char
 
-        # Avanzamos el índice hasta que la felicitación salga del límite permitido
-        while i < n and felicitaciones[i] <= limite:
-            i += 1
+        if not n or n == "0":
+            break
+        n = int(n)
 
-    return mensajes
+        if n > limite:
+            mensajes += 1
+            limite = n + time
+
+    print(mensajes)
 
 
-input = sys.stdin.read
+"""
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
 
-data = input().strip().split("\n")
-index = 0
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-while index < len(data):
-    time = int(data[index])
-    index += 1
-    list1 = [int(x) for x in data[index].split()][:-1]
-    index += 1
-    maxTime = calcular_min_mensajes(time, list1)
-    print(maxTime)
+        String line;
+        while ((line = reader.readLine()) != null && !line.isEmpty()) {
+            int time = Integer.parseInt(line.trim());
+
+            int mensajes = 0;
+            int limite = -1;
+
+            while (true) {
+                StringBuilder nBuilder = new StringBuilder();
+                int charInt;
+
+                // Read one character at a time
+                while ((charInt = reader.read()) != -1) {
+                    char ch = (char) charInt;
+                    if (ch == ' ' || ch == '\n') {
+                        break;
+                    }
+                    nBuilder.append(ch);
+                }
+
+                String nStr = nBuilder.toString();
+                if (nStr.isEmpty() || nStr.equals("0")) {
+                    break;
+                }
+
+                int n = Integer.parseInt(nStr);
+
+                if (n > limite) {
+                    mensajes++;
+                    limite = n + time;
+                }
+            }
+
+            System.out.println(mensajes);
+        }
+    }
+}
+"""
