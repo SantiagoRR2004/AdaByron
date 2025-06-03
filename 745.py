@@ -1,29 +1,7 @@
 # https://aceptaelreto.com/problem/statement.php?id=745
 
 
-list1 = [int(x) for x in input().split()]
-
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
-
-def excelRecursive(n):
-    if n <= 0:
-        return ""
-    n -= 1
-    return excelRecursive(n // 26) + alphabet[n % 26]
-
-
-def decimal_to_base26(decimal):
-    if decimal <= 0:
-        return ""
-
-    base26 = ""
-    while decimal > 0:
-        remainder = (decimal - 1) % 26
-        base26 = chr(remainder + 65) + base26
-        decimal = (decimal - 1) // 26
-
-    return base26
 
 
 def excelTranslate(n):
@@ -35,14 +13,14 @@ def excelTranslate(n):
     return word
 
 
-while list1[0] != 0:
-    list1.pop(-1)
-    solution = []
-    for code in list1:
-        solution.append(excelTranslate(code))
-
-    print(" ".join(solution))
+while True:
     list1 = [int(x) for x in input().split()]
+    if list1 == [0]:
+        break  # caso final, no se procesa
+
+    list1.pop()  # quitar el 0 que indica fin del caso de prueba
+    solution = [excelTranslate(code) for code in list1]
+    print(" ".join(solution))
 
 
 """
