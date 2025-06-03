@@ -6,8 +6,19 @@ cols, rows, gaps = [int(x) for x in input().split()]
 
 while cols != 0 and rows != 0:
 
-    horizontal = [[1 for x in range(cols - 1)] for y in range(rows)]
-    vertical = [[1 for x in range(cols)] for y in range(rows - 1)]
+    # Horizontal and vertical connections with padding
+    # Padding is to avoid index errors when checking adjacent cells
+    # and eliminate ifs
+    horizontal = (
+        [[0] * (cols + 2)]
+        + [[0] + [1 for x in range(cols - 1)] + [0] for y in range(rows)]
+        + [[0] * (cols + 2)]
+    )
+    vertical = (
+        [[0] * (cols + 2)]
+        + [[0] + [1 for x in range(cols)] + [0] for y in range(rows - 1)]
+        + [[0] * (cols + 2)]
+    )
 
     if gaps > 0:
 
@@ -17,18 +28,14 @@ while cols != 0 and rows != 0:
         ]
 
         for col, row in intersections:
-            if col > 1:
-                # Eliminate connection to the left
-                horizontal[row - 1][col - 2] = 0
-            if col < cols:
-                # Eliminate connection to the right
-                horizontal[row - 1][col - 1] = 0
-            if row > 1:
-                # Eliminate connection upwards
-                vertical[row - 2][col - 1] = 0
-            if row < rows:
-                # Elimiante connection downwards
-                vertical[row - 1][col - 1] = 0
+            # Eliminate connection to the left
+            horizontal[row][col - 1] = 0
+            # Eliminate connection to the right
+            horizontal[row][col] = 0
+            # Eliminate connection upwards
+            vertical[row - 1][col] = 0
+            # Eliminate connection downwards
+            vertical[row][col] = 0
 
     # The connections left are the number of buildings
     print(sum([sum(x) for x in horizontal]) + sum([sum(x) for x in vertical]))
