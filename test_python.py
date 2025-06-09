@@ -45,7 +45,9 @@ def create_test_method(name: str) -> callable:
         # We loop through all the input files
         for file in ins.union(answers):
             with open(os.path.join("tests", name, file + ".in")) as inputFile:
-                output, error = runFile.run_script_python(name + ".py", inputFile.read())
+                output, error = runFile.run_script_python(
+                    name + ".py", inputFile.read()
+                )
 
             with open(os.path.join("tests", name, file + ".ans")) as outputFile:
                 self.assertEqual(output, outputFile.read() + "\n")
@@ -54,15 +56,16 @@ def create_test_method(name: str) -> callable:
     return test_method
 
 
-# Dynamically create test methods.
-class DynamicTestCase(unittest.TestCase):
-    pass
-
-
 # We find all the folders in the tests folder
 folders = os.listdir("tests")
 
 # Add methods to the DynamicTestCase class.
 for folderName in folders:
+    # Create the class dynamically
+    DynamicTestClass = type(folderName, (unittest.TestCase,), {})
+
     testMethod = create_test_method(folderName)
-    setattr(DynamicTestCase, testMethod.__name__, testMethod)
+    setattr(DynamicTestClass, testMethod.__name__, testMethod)
+
+    # Add the class to the globals() dictionary so that unittest can find it
+    globals()[folderName] = DynamicTestClass
