@@ -1,14 +1,4 @@
-
-def recursive(set1, number, maximun) -> int:
-
-    if len(set1)+number <= maximun:
-        return number
-    
-    for c in set1:
-        inter = clases[c]["noCoin"].intersection(set1)
-        number = max(number, recursive(inter, number+1, maximun))
-
-    return number
+# https://en.wikipedia.org/wiki/Interval_scheduling#Unweighted
 
 
 nClases = int(input())
@@ -20,25 +10,16 @@ for _ in range(nClases):
     start = int(start)
     end = int(end)
 
-    clases[classN] = {"s": start, "e":end, "noCoin":set()}
+    clases[classN] = {"s": start, "e": end}
 
-    for c in clases.keys():
-        if (clases[c]["s"] > clases[classN]["e"]) or\
-            (clases[c]["e"] < clases[classN]["s"]):
-            clases[c]["noCoin"].add(classN)
+nMaxClases = 0
 
-maximun = 1
-counter = 0
+while len(clases) > 0:
+    # Get the class with the earliest end time
+    clase = min(clases.items(), key=lambda x: x[1]["e"])
+    nMaxClases += 1
 
-for c in clases.keys():
-    
-    if nClases - counter <= maximun:
-        break
+    # Remove all classes that overlap with the selected class
+    clases = {k: v for k, v in clases.items() if v["s"] >= clase[1]["e"]}
 
-    counter += 1
-
-    for c2 in clases[c]["noCoin"]:
-        inter = clases[c]["noCoin"].intersection(clases[c2]["noCoin"])
-        maximun = max(maximun, recursive(inter, 2, maximun))
-
-print(maximun)
+print(nMaxClases)
