@@ -6,39 +6,29 @@ cols, rows, gaps = [int(x) for x in input().split()]
 
 while cols != 0 and rows != 0:
 
-    # Horizontal and vertical connections with padding
-    # Padding is to avoid index errors when checking adjacent cells
-    # and eliminate ifs
-    horizontal = (
-        [[0] * (cols + 2)]
-        + [[0] + [1 for x in range(cols - 1)] + [0] for y in range(rows)]
-        + [[0] * (cols + 2)]
-    )
-    vertical = (
-        [[0] * (cols + 2)]
-        + [[0] + [1 for x in range(cols)] + [0] for y in range(rows - 1)]
-        + [[0] * (cols + 2)]
-    )
+    horizontalTotal = (cols - 1) * rows
+    verticalTotal = (rows - 1) * cols
+
+    horizontalSet = set()
+    verticalSet = set()
 
     if gaps > 0:
-
         intersections = [int(x) for x in input().split()]
         intersections = [
             intersections[i : i + 2] for i in range(0, len(intersections), 2)
         ]
 
-        for col, row in intersections:
-            # Eliminate connection to the left
-            horizontal[row][col - 1] = 0
-            # Eliminate connection to the right
-            horizontal[row][col] = 0
-            # Eliminate connection upwards
-            vertical[row - 1][col] = 0
-            # Eliminate connection downwards
-            vertical[row][col] = 0
+        for x, y in intersections:
+            # Add top
+            verticalSet.add((x, max(y - 1, 1)))
+            # Add bottom
+            verticalSet.add((x, min(y, rows - 1)))
+            # Add left
+            horizontalSet.add((max(x - 1, 1), y))
+            # Add right
+            horizontalSet.add((min(x, cols - 1), y))
 
-    # The connections left are the number of buildings
-    print(sum([sum(x) for x in horizontal]) + sum([sum(x) for x in vertical]))
+    print(horizontalTotal + verticalTotal - len(horizontalSet) - len(verticalSet))
 
     cols, rows, gaps = [int(x) for x in input().split()]
 
