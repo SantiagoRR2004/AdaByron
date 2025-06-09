@@ -3,7 +3,9 @@ import runFile
 import os
 
 
-def create_test_method(name: str) -> callable:
+def create_test_method_python(
+    name: str, programmingLanguage: str, extension: str
+) -> callable:
     """
     Create a test method for the given test case.
 
@@ -15,10 +17,6 @@ def create_test_method(name: str) -> callable:
     """
 
     def test_method(self):
-
-        # We check that the python file exists
-        if not os.path.exists(f"{name}.py"):
-            raise Exception(f"File {name}.py not found")
 
         # Get the name of all the files in tests/name
         files = os.listdir(os.path.join("tests", name))
@@ -41,19 +39,34 @@ def create_test_method(name: str) -> callable:
             raise Exception(
                 f"Not corresponding .ans of {extraAnswers}.\n Not corresponding .in of {extraIns}"
             )
+        
+        # Get the run_script_ dinamically
+        scriptByLanguageName = f"run_script_{programmingLanguage}"
+        scriptByLanguage = getattr(runFile, scriptByLanguageName)
 
         # We loop through all the input files
         for file in ins.union(answers):
             with open(os.path.join("tests", name, file + ".in")) as inputFile:
-                output, error = runFile.run_script_python(
-                    name + ".py", inputFile.read()
+                output, error = scriptByLanguage(
+                    name + extension, inputFile.read()
                 )
 
             with open(os.path.join("tests", name, file + ".ans")) as outputFile:
                 self.assertEqual(output, outputFile.read() + "\n")
 
-    test_method.__name__ = f"test_{name}"
+    test_method.__name__ = f"test_{programmingLanguage}"
     return test_method
+
+
+def addTests(cls: type) -> None:
+    name = cls.__name__
+
+    if os.path.exists(f"{name}.py"):
+        # Create a test method for the class
+        testMethod = create_test_method_python(
+            name, programmingLanguage="python", extension=".py"
+        )
+        setattr(cls, testMethod.__name__, testMethod)
 
 
 # We find all the folders in the tests folder
@@ -64,8 +77,8 @@ for folderName in folders:
     # Create the class dynamically
     DynamicTestClass = type(folderName, (unittest.TestCase,), {})
 
-    testMethod = create_test_method(folderName)
-    setattr(DynamicTestClass, testMethod.__name__, testMethod)
+    # Add the test methods to the class
+    addTests(DynamicTestClass)
 
     # Add the class to the globals() dictionary so that unittest can find it
     globals()[folderName] = DynamicTestClass
