@@ -3,23 +3,24 @@
 
 nClases = int(input())
 
-clases = {}
+clases = []
 
 for _ in range(nClases):
-    classN, start, end = [x for x in input().split()]
+    classN, start, end = input().split()
     start = int(start)
     end = int(end)
 
-    clases[classN] = {"s": start, "e": end}
+    clases.append((start, end))
+
+# Sort classes by end time
+clases.sort(key=lambda x: x[1])
 
 nMaxClases = 0
+currentEnd = -1
 
-while len(clases) > 0:
-    # Get the class with the earliest end time
-    clase = min(clases.items(), key=lambda x: x[1]["e"])
-    nMaxClases += 1
-
-    # Remove all classes that overlap with the selected class
-    clases = {k: v for k, v in clases.items() if v["s"] >= clase[1]["e"]}
+for start, end in clases:
+    if start >= currentEnd:
+        nMaxClases += 1
+        currentEnd = end
 
 print(nMaxClases)
