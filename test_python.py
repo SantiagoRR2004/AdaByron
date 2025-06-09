@@ -68,6 +68,13 @@ def addTests(cls: type) -> None:
         )
         setattr(cls, testMethod.__name__, testMethod)
 
+    if os.path.exists(f"{name}.cpp"):
+        # Create a test method for the class
+        testMethod = create_test_method_python(
+            name, programmingLanguage="cpp", extension=".cpp"
+        )
+        setattr(cls, testMethod.__name__, testMethod)
+
 
 # We find all the folders in the tests folder
 folders = os.listdir("tests")
