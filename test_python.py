@@ -45,7 +45,7 @@ def create_test_method(name: str) -> callable:
         # We loop through all the input files
         for file in ins.union(answers):
             with open(os.path.join("tests", name, file + ".in")) as inputFile:
-                output, error = runFile.run_script(name + ".py", inputFile.read())
+                output, error = runFile.run_script_python(name + ".py", inputFile.read())
 
             with open(os.path.join("tests", name, file + ".ans")) as outputFile:
                 self.assertEqual(output, outputFile.read() + "\n")
