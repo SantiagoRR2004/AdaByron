@@ -1,26 +1,39 @@
 # https://aceptaelreto.com/problem/statement.php?id=745
 
 
-alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
-
 def excelTranslate(n):
     word = ""
     while n > 0:
         n -= 1
-        word = alphabet[n % 26] + word
+        word = chr(ord('A') + n % 26) + word
         n //= 26
     return word
 
 
-while True:
-    list1 = [int(x) for x in input().split()]
-    if list1 == [0]:
-        break  # caso final, no se procesa
+import sys
 
-    list1.pop()  # quitar el 0 que indica fin del caso de prueba
-    solution = [excelTranslate(code) for code in list1]
-    print(" ".join(solution))
+first = True
+
+while True:
+    # Iterate this way to reduce memory usage
+    n = ""
+    while True:
+        char = sys.stdin.read(1)
+        if char == " " or char == "\n" or not char:
+            break
+        n += char
+
+    if n == "0":
+        if not first:
+            print()
+        else:
+            break
+        first = True
+    else:
+        if not first:
+            print(" ", end="")
+        print(excelTranslate(int(n)), end="")
+        first = False
 
 
 """
