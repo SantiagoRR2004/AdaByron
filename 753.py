@@ -1,47 +1,31 @@
 # https://aceptaelreto.com/problem/statement.php?id=753
-# https://es.wikipedia.org/wiki/Problema_de_la_partici%C3%B3n
-# https://en.wikipedia.org/wiki/Knapsack_problem
 
 
-def can_partition_TLE(nums):
+def can(nums, index: int, suma: int, target: int) -> bool:
+    """
+    Recursive function to check if a subset of nums can sum to target.
 
-    # No consideramos el caso en que la suma de los elementos es impar
-    # porque el enunciado dice que siempre será par
+    It checks thge next number or skips it recursively.
+    """
+    if suma == target:
+        # Exit condition
+        return True
+    if suma > target or index == len(nums):
+        # If the sum exceeds the target or we have considered all elements
+        return False
 
-    target = sum(nums) // 2
-    n = len(nums)
+    tempSum = suma
+    for i in range(index, len(nums)):
+        tempSum += nums[i]
+        if tempSum > suma:
+            break
+        if tempSum == suma:
+            # Exit condition
+            return True
 
-    # Crear un conjunto para almacenar las sumas alcanzables
-    achievable_sums = {0}
-
-    for num in nums:
-        new_sums = set()
-        for s in achievable_sums:
-            if s + num == target:
-                return True
-            new_sums.add(s + num)
-        achievable_sums.update(new_sums)
-
-    return target in achievable_sums
-
-
-def can_partition_MLE(nums):
-
-    # No consideramos el caso en que la suma de los elementos es impar
-    # porque el enunciado dice que siempre será par
-
-    target = sum(nums) // 2
-    n = len(nums)
-
-    # Crear una tabla DP para almacenar si es posible alcanzar cada suma desde 0 hasta target
-    dp = [False] * (target + 1)
-    dp[0] = True  # Siempre podemos obtener una suma de 0
-
-    for num in nums:
-        for i in range(target, num - 1, -1):
-            dp[i] = dp[i] or dp[i - num]
-
-    return dp[target]
+    return can(nums, index + 1, suma + nums[index], target) or can(
+        nums, index + 1, suma, target
+    )
 
 
 nStones = int(input())
@@ -50,8 +34,9 @@ nStones = int(input())
 while nStones != 0:
 
     stones = [int(x) for x in input().split()]
+    suma = sum(stones)
 
-    if can_partition_TLE(stones):
+    if can(stones, 0, 0, suma // 2):
         print("SI")
     else:
         print("NO")
