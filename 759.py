@@ -1,112 +1,92 @@
 # https://aceptaelreto.com/problem/statement.php?id=759
+# https://en.wikipedia.org/wiki/Disjoint-set_data_structure
 
 
-class Node:
-    def __init__(self):
-        self.moreThan = set()
-        self.lessThan = set()
+class DisjointSet:
+    def __init__(self, n: int):
+        self.parent = list(range(n))
 
-    def addMoreThan(self, node) -> bool:
-        if node in self.lessThan or self == node:
-            return False
+    def find(self, u: int) -> int:
+        if self.parent[u] != u:
+            self.parent[u] = self.find(self.parent[u])
+        return self.parent[u]
 
-        self.moreThan.add(node)
-        return True
-
-    def addLessThan(self, node) -> bool:
-        if node in self.moreThan or self == node:
-            return False
-
-        self.lessThan.add(node)
-        return True
-
-    def equals(self, node):
-        if node in self.moreThan or node in self.lessThan:
-            return False
-        newNode = Node()
-        newNode.moreThan = self.moreThan.union(node.moreThan)
-        newNode.lessThan = self.lessThan.union(node.lessThan)
-
-        return newNode
+    def union(self, u: int, v: int) -> None:
+        root_u = self.find(u)
+        root_v = self.find(v)
+        if root_u != root_v:
+            self.parent[root_v] = root_u
 
 
-def hasCycle(nodes):
-    visited = [False] * len(nodes)
-    recStack = [False] * len(nodes)
+def add_edge(adyacencia: list[list[int]], u: int, v: int) -> None:
+    adyacencia[u].append(v)
+
+
+def hasCycle(nNodes: int, adj: list[list[int]]) -> bool:
+    visited = [0] * nNodes  # 0 = unvisited, 1 = visiting, 2 = visited
 
     def dfs(node):
-        if not visited[node]:
-            visited[node] = True
-            recStack[node] = True
+        if visited[node] == 1:
+            return True
+        if visited[node] == 2:
+            return False
 
-            # Recursively visit all neighbors
-            for neighbor in nodes[node].moreThan:
-                if not visited[nodes.index(neighbor)]:
-                    if dfs(nodes.index(neighbor)):
-                        return True
-                elif recStack[nodes.index(neighbor)]:
-                    return True
-
-            # Backtrack: remove the node from recursion stack
-            recStack[node] = False
-
+        visited[node] = 1  # mark as visiting
+        for neighbor in adj[node]:
+            if dfs(neighbor):
+                return True
+        visited[node] = 2
         return False
 
-    # Check for cycle in each node
-    for node in range(len(nodes)):
-        if dfs(node):
-            return True
+    for i in range(nNodes):
+        if visited[i] == 0:
+            if dfs(i):
+                return True
 
     return False
 
 
 import sys
 
-data = sys.stdin.readlines()
-i = 0
+inputIterator = iter(sys.stdin)
 
-while i < len(data):
-    nParticipantes, nResultados = [int(x) for x in data[i].strip().split()]
-    participants = [Node() for _ in range(nParticipantes)]
-    i += 1
-    cheaterFlag = False
+while True:
+    try:
+        line = next(inputIterator).strip()
+        if not line:
+            continue
+        nParticipantes, nResultados = [int(x) for x in line.split()]
+    except StopIteration:
+        break  # No more input
+    except ValueError:
+        continue  # Skip invalid lines
+
+    dSet = DisjointSet(nParticipantes + 1)
+
+    lessThan = []
 
     for j in range(nResultados):
-        p1, op, p2 = data[i].strip().split()
-        i += 1
-        if not cheaterFlag:
-            if "=" == op:
-                newNode = participants[int(p1) - 1].equals(participants[int(p2) - 1])
-                if newNode:
-                    participants[int(p1) - 1] = newNode
-                    participants[int(p2) - 1] = newNode
-                else:
-                    print("TRAMPAS")
-                    cheaterFlag = True
-            elif ">" == op:
-                if not participants[int(p2) - 1].addMoreThan(
-                    participants[int(p1) - 1]
-                ) or not participants[int(p1) - 1].addLessThan(
-                    participants[int(p2) - 1]
-                ):
-                    print("TRAMPAS")
-                    cheaterFlag = True
-            else:
-                if not participants[int(p1) - 1].addMoreThan(
-                    participants[int(p2) - 1]
-                ) or not participants[int(p2) - 1].addLessThan(
-                    participants[int(p1) - 1]
-                ):
-                    print("TRAMPAS")
-                    cheaterFlag = True
+        p1, op, p2 = next(inputIterator).strip().split()
 
-    if not cheaterFlag:
-        participants = list(set(participants))
-        # Now we check for a loop
-        if hasCycle(participants):
-            print("TRAMPAS")
+        
+        if "=" == op:
+            # The participants are equal
+            dSet.union(int(p1), int(p2))
+        elif ">" == op:
+            lessThan.append((int(p2), int(p1)))
         else:
-            print("DESCONFIADO")
+            lessThan.append((int(p1), int(p2)))
+
+    adjacencyList = [[] for _ in range(nParticipantes + 1)]
+    for op1, op2 in lessThan:
+        root1 = dSet.find(op1)
+        root2 = dSet.find(op2)
+        add_edge(adjacencyList, root1, root2)
+
+    if hasCycle(nParticipantes + 1, adjacencyList):
+        print("TRAMPAS")
+    else:
+        print("DESCONFIADO")
 
 
 """
