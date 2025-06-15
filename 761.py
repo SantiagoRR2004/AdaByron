@@ -41,43 +41,47 @@ index = 0
 while index < len(data):
     columns, rows = [int(x) for x in data[index].strip().split()]
     index += 1
-    nWormholes = 0
+
     matrix = []
     graph = Graph(columns * rows)
-    # First we add the connections with rows
-    for row in range(rows):
-        for col in range(columns - 1):
-            graph.add_edge(row * columns + col, row * columns + col + 1, 1)
-            graph.add_edge(row * columns + col + 1, row * columns + col, 1)
-
-    # Then we add the connections with columns
-    for col in range(columns):
-        for row in range(rows - 1):
-            graph.add_edge(row * columns + col, (row + 1) * columns + col, 1)
-            graph.add_edge((row + 1) * columns + col, row * columns + col, 1)
-
     wormholePositions = []
 
+    # Store the map
     for i in range(rows):
-        matrix.append(list(data[index].strip()))
+        row = list(data[index].strip())
+        matrix.append(row)
         index += 1
-        nWormholes += matrix[i].count("O")
-        # If it is a black hole or wormhole, we remove all the edges that start at that position
-        for j in range(columns):
-            if matrix[i][j] == "#" or matrix[i][j] == "O":
-                graph.remove_edges(i * columns + j)
-                if matrix[i][j] == "O":
-                    wormholePositions.append(i * columns + j)
 
-    for i in range(nWormholes):
+    # First, connect all valid adjacent cells
+    for i in range(rows):
+        for j in range(columns):
+            if matrix[i][j] == "#":
+                continue  # Wall, no connections
+            u = i * columns + j
+            # Check 4 directions
+            for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                ni, nj = i + dx, j + dy
+                if 0 <= ni < rows and 0 <= nj < columns and matrix[ni][nj] != "#":
+                    v = ni * columns + nj
+                    graph.add_edge(u, v, 1)
+
+            if matrix[i][j] == "O":
+                wormholePositions.append(u)
+                # Remove current outgoing edges (to simulate teleport)
+                graph.remove_edges(u)
+
+    for i in range(len(wormholePositions)):
         # col, row, value
         wormholeData = [int(x) for x in data[index].strip().split()]
         graph.add_edge(
-            wormholePositions[0],
+            wormholePositions[i],
             (wormholeData[1] - 1) * columns + (wormholeData[0] - 1),
             wormholeData[2],
         )
         index += 1
+
+    # Remove edges from the objective
+    graph.remove_edges((rows - 1) * columns + (columns - 1))
 
     result = graph.bellman_ford(0)
 
