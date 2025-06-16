@@ -4,13 +4,16 @@ import os
 
 
 def create_test_method_python(
-    name: str, programmingLanguage: str, extension: str
+    name: str, folderPath: str, programmingLanguage: str, extension: str
 ) -> callable:
     """
     Create a test method for the given test case.
 
     Args:
         - name: The name of the test case.
+        - folderPath: The path to the test case.
+        - programmingLanguage: The programming language of the solution.
+        - extension: The file extension of the solution.
 
     Returns:
         - A test method.
@@ -18,8 +21,8 @@ def create_test_method_python(
 
     def test_method(self):
 
-        # Get the name of all the files in tests/name
-        files = os.listdir(os.path.join("tests", name))
+        # Get the name of all the files in tests/folderPath
+        files = os.listdir(os.path.join("tests", folderPath))
 
         # We get the names of the input and output files
         ins = set([f[:-3] for f in files if f.endswith(".in")])
@@ -39,53 +42,73 @@ def create_test_method_python(
             raise Exception(
                 f"Not corresponding .ans of {extraAnswers}.\n Not corresponding .in of {extraIns}"
             )
-        
+
         # Get the run_script_ dinamically
         scriptByLanguageName = f"run_script_{programmingLanguage}"
         scriptByLanguage = getattr(runFile, scriptByLanguageName)
 
         # We loop through all the input files
         for file in ins.union(answers):
-            with open(os.path.join("tests", name, file + ".in")) as inputFile:
+            with open(os.path.join("tests", folderPath, file + ".in")) as inputFile:
                 output, error = scriptByLanguage(
-                    name + extension, inputFile.read()
+                    os.path.join("solutions", folderPath, name + extension),
+                    inputFile.read(),
                 )
 
-            with open(os.path.join("tests", name, file + ".ans")) as outputFile:
+            with open(os.path.join("tests", folderPath, file + ".ans")) as outputFile:
                 self.assertEqual(output, outputFile.read() + "\n")
 
     test_method.__name__ = f"test_{programmingLanguage}"
     return test_method
 
 
-def addTests(cls: type) -> None:
+def addTests(cls: type, path: str = None) -> None:
     name = cls.__name__
+    solutionsPath = os.path.join("solutions", path)
 
-    if os.path.exists(f"{name}.py"):
+    if os.path.exists(os.path.join(solutionsPath, f"{name}.py")):
         # Create a test method for the class
         testMethod = create_test_method_python(
-            name, programmingLanguage="python", extension=".py"
+            name, path, programmingLanguage="python", extension=".py"
         )
         setattr(cls, testMethod.__name__, testMethod)
 
-    if os.path.exists(f"{name}.cpp"):
+    if os.path.exists(os.path.join(solutionsPath, f"{name}.cpp")):
         # Create a test method for the class
         testMethod = create_test_method_python(
-            name, programmingLanguage="cpp", extension=".cpp"
+            name, path, programmingLanguage="cpp", extension=".cpp"
         )
         setattr(cls, testMethod.__name__, testMethod)
 
 
-# We find all the folders in the tests folder
-folders = os.listdir("tests")
+for root, dirs, files in os.walk("tests"):
 
-# Add methods to the DynamicTestCase class.
-for folderName in folders:
-    # Create the class dynamically
-    DynamicTestClass = type(folderName, (unittest.TestCase,), {})
+    for folderName in dirs:
 
-    # Add the test methods to the class
-    addTests(DynamicTestClass)
+        folderPath = os.path.join(root, folderName)
+        subfolders = [
+            f
+            for f in os.listdir(folderPath)
+            if os.path.isdir(os.path.join(folderPath, f))
+        ]
 
-    # Add the class to the globals() dictionary so that unittest can find it
-    globals()[folderName] = DynamicTestClass
+        # If the folder does not contain any subfolders, we create a test class for it
+        if not subfolders:
+            # Create the class dynamically
+            DynamicTestClass = type(folderName, (unittest.TestCase,), {})
+
+            folderPath = os.path.join(root, folderName)
+            print(folderPath)
+            pathNoTest = os.path.join(
+                *folderPath.split(os.sep)[1:]
+            )  # Remove the 'tests' prefix
+
+            # Add the test methods to the class
+            addTests(DynamicTestClass, pathNoTest)
+
+            # Add the class to the globals() dictionary so that unittest can find it
+            # TODO: Make it so pytest uses / in the tree structure
+            globals()[pathNoTest] = DynamicTestClass
+
+if "DynamicTestClass" in globals():
+    del globals()["DynamicTestClass"]
