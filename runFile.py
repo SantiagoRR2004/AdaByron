@@ -36,7 +36,7 @@ def run_script_cpp(source_file: str, input_data: str) -> tuple:
         - tuple: (stdout, stderr) from running the compiled program.
     """
     # Derive binary name from source file (strip extension)
-    output_binary = os.path.splitext(os.path.basename(source_file))[0]
+    output_binary = os.path.splitext(source_file)[0]
 
     # Compile the C++ file
     compile_process = subprocess.run(
