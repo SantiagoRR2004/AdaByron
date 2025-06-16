@@ -81,16 +81,34 @@ def addTests(cls: type, path: str = None) -> None:
         setattr(cls, testMethod.__name__, testMethod)
 
 
-# We find all the folders in the tests folder
-folders = os.listdir("tests")
+for root, dirs, files in os.walk("tests"):
 
-# Add methods to the DynamicTestCase class.
-for folderName in folders:
-    # Create the class dynamically
-    DynamicTestClass = type(folderName, (unittest.TestCase,), {})
+    for folderName in dirs:
 
-    # Add the test methods to the class
-    addTests(DynamicTestClass, folderName)
+        folderPath = os.path.join(root, folderName)
+        subfolders = [
+            f
+            for f in os.listdir(folderPath)
+            if os.path.isdir(os.path.join(folderPath, f))
+        ]
 
-    # Add the class to the globals() dictionary so that unittest can find it
-    globals()[folderName] = DynamicTestClass
+        # If the folder does not contain any subfolders, we create a test class for it
+        if not subfolders:
+            # Create the class dynamically
+            DynamicTestClass = type(folderName, (unittest.TestCase,), {})
+
+            folderPath = os.path.join(root, folderName)
+            print(folderPath)
+            pathNoTest = os.path.join(
+                *folderPath.split(os.sep)[1:]
+            )  # Remove the 'tests' prefix
+
+            # Add the test methods to the class
+            addTests(DynamicTestClass, pathNoTest)
+
+            # Add the class to the globals() dictionary so that unittest can find it
+            # TODO: Make it so pytest uses / in the tree structure
+            globals()[pathNoTest] = DynamicTestClass
+
+if "DynamicTestClass" in globals():
+    del globals()["DynamicTestClass"]
