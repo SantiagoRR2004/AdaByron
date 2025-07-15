@@ -1,3 +1,7 @@
+import sys
+from collections import deque
+
+
 def getPath(initialIndex: int, currentPower: int) -> list:
 
     exitFlag = False
@@ -44,20 +48,6 @@ def getPath(initialIndex: int, currentPower: int) -> list:
     return path
 
 
-length, IPower = [int(x) for x in input().split()]
-
-values = [int(x) for x in input().split()]
-
-"""
-In the validIndexes we keep the indexes that we
-can explore.
-
-When we find a partial path we know that starting from any position
-in the path we can't find a solution
-"""
-validIndexes = [x for x in range(length) if values[x] <= IPower]
-
-
 """
 These are shortcuts meant to help with the search
 The key is the starting index and the value the length of the shortcut
@@ -90,6 +80,64 @@ x₁, (x₂₁, ..., x₂ₙ), x₃, (y₁₁, ..., y₁ₘ), y₂
 The next step would be to choose between x₁ and y
 """
 downPath = {}
+
+
+length, IPower = [int(x) for x in input().split()]
+
+values = []
+miniPath = deque()
+nReapetedValues = 1
+ascending = False
+
+
+while len(values) < length:
+    # Iterate this way to preprocess
+    n = ""
+    while True:
+        char = sys.stdin.read(1)
+        if char == " " or char == "\n" or not char:
+            break
+        n += char
+
+    n = int(n)
+    values.append(n)
+
+    if not miniPath:
+        miniPath.append(n)
+    else:
+        if n < miniPath[-1]:
+            if not ascending:
+                miniPath.append(n)
+            else:
+                downPath[len(values) - 2] = len(miniPath)
+                miniPath = deque([miniPath[-1]] * nReapetedValues + [n])
+                ascending = False
+
+            nReapetedValues = 1
+
+        elif n > miniPath[-1]:
+            if ascending:
+                miniPath.append(n)
+            else:
+                miniPath = deque([miniPath[-1]] * nReapetedValues + [n])
+                ascending = True
+
+            nReapetedValues = 1
+
+        else:
+            # Equals
+            miniPath.append(n)
+            nReapetedValues += 1
+
+
+"""
+In the validIndexes we keep the indexes that we
+can explore.
+
+When we find a partial path we know that starting from any position
+in the path we can't find a solution
+"""
+validIndexes = [x for x in range(length) if values[x] <= IPower]
 
 
 while validIndexes:
