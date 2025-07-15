@@ -18,6 +18,13 @@ def getPath(initialIndex: int, currentPower: int) -> list:
             print(" ".join([str(x + 1) for x in path]))
             quit()
 
+        elif currentPower >= maximum:
+            # We have no more obstacles
+            path.extend(range(indDown, -1, -1))
+            path.extend(range(indUp, length))
+            indDown = -1
+            indUp = length
+
         elif (
             indDown >= 0  # Valid indDown
             and values[indDown] <= currentPower  # Enough power
@@ -85,7 +92,8 @@ downPath = {}
 length, IPower = [int(x) for x in input().split()]
 
 values = []
-miniPath = deque()
+miniPath = None
+maximum = None
 nReapetedValues = 1
 validIndex = []  # Only descending indexes should be valid
 ascending = False
@@ -104,7 +112,8 @@ while len(values) < length:
     values.append(n)
 
     if not miniPath:
-        miniPath.append(n)
+        miniPath = deque([n])
+        maximum = n
     else:
         if n < miniPath[-1]:
             if not ascending:
@@ -117,6 +126,7 @@ while len(values) < length:
             nReapetedValues = 1
 
         elif n > miniPath[-1]:
+            maximum = max(maximum, n)
             if ascending:
                 miniPath.append(n)
             else:
