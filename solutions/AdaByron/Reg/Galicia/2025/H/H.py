@@ -87,6 +87,7 @@ length, IPower = [int(x) for x in input().split()]
 values = []
 miniPath = deque()
 nReapetedValues = 1
+validIndex = []  # Only descending indexes should be valid
 ascending = False
 
 
@@ -119,6 +120,9 @@ while len(values) < length:
             if ascending:
                 miniPath.append(n)
             else:
+                validIndex.extend(
+                    list(range(len(values) - 1 - len(miniPath), len(values) - 1))
+                )
                 miniPath = deque([miniPath[-1]] * nReapetedValues + [n])
                 ascending = True
 
@@ -129,6 +133,8 @@ while len(values) < length:
             miniPath.append(n)
             nReapetedValues += 1
 
+if not ascending:
+    validIndex.extend(list(range(len(values) - len(miniPath), len(values))))
 
 """
 In the validIndexes we keep the indexes that we
@@ -137,7 +143,7 @@ can explore.
 When we find a partial path we know that starting from any position
 in the path we can't find a solution
 """
-validIndexes = [x for x in range(length) if values[x] <= IPower]
+validIndexes = [x for x in validIndex if values[x] <= IPower]
 
 
 while validIndexes:
