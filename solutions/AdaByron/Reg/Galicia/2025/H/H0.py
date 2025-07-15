@@ -1,3 +1,9 @@
+"""
+This is mean to be a version that always works to check
+that the result is the same with the faster ones
+"""
+
+
 def getPath(initialIndex: int, currentPower: int) -> list:
 
     exitFlag = False
