@@ -43,13 +43,19 @@ values = [int(x) for x in input().split()]
 
 validIndexes = [x for x in range(length) if values[x] <= IPower]
 
+validIndexListIndex = 0
 
-for index in validIndexes:
+while validIndexListIndex < len(validIndexes):
 
     path = getPath(
-        index,
+        validIndexes[validIndexListIndex],
         IPower + 1,
     )
 
+    validIndexes[validIndexListIndex + 1 :] = [
+        x for x in validIndexes[validIndexListIndex + 1 :] if x not in path
+    ]
+
+    validIndexListIndex += 1
 
 print("FALLIDA")
