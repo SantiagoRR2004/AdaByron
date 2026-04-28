@@ -93,7 +93,7 @@ for root, dirs, files in os.walk("tests"):
         ]
 
         # If the folder does not contain any subfolders, we create a test class for it
-        if not subfolders:
+        if not subfolders or subfolders == ["__pycache__"]:
             # Create the class dynamically
             DynamicTestClass = type(folderName, (unittest.TestCase,), {})
 
