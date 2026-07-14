@@ -4,7 +4,7 @@
     {
       "label": "Setup Environment and Install Dependencies",
       "type": "shell",
-      "command": "python3 -m venv .venv && source .venv/bin/activate && pip install pytest-xdist",
+      "command": "python3 -m venv .venv && source .venv/bin/activate && pip install pytest-xdist black",
       "group": {
         "kind": "build",
         "isDefault": true
@@ -34,6 +34,58 @@
       },
       "runOptions": {
         "runOn": "folderOpen" // Run this task when the folder is opened
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Install Prettier Extension",
+      "type": "shell",
+      "command": "code --install-extension esbenp.prettier-vscode",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "silent",
+        "focus": false,
+        "panel": "new"
+      },
+      "runOptions": {
+        "runOn": "folderOpen" // Run this task when the folder is opened
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Install Run on save",
+      "type": "shell",
+      "command": "code --install-extension Gruntfuggly.triggertaskonsave",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "silent",
+        "focus": false,
+        "panel": "new"
+      },
+      "runOptions": {
+        "runOn": "folderOpen" // Run this task when the folder is opened
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Format Code with Black",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python3",
+      "args": ["-m", "black", "."],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared"
       },
       "problemMatcher": []
     }
