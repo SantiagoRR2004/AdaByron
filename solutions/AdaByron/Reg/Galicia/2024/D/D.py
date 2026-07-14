@@ -1,39 +1,22 @@
 numCromos, numSobres, precioSobre = [int(x) for x in input().split()]
 
-preciosCromo = [int(x) for x in input().split()]
+
+preciosCromo = [0] + [int(x) for x in input().split()]
 
 
-precioMin = min(precioSobre * numSobres, sum(preciosCromo))
-cromosObtenidos = set()
+faltantes = sum(preciosCromo)
+visto = [False] * (numCromos + 1)
 
+precioMin = faltantes
 
-for i in range(numSobres):
-    cromos = [int(x) for x in input().split()]
-    cromosObtenidos.update(cromos)
-    costoSobres = (i + 1) * precioSobre
-    costoCromos = sum(
-        preciosCromo[cromo - 1]
-        for cromo in (set(range(1, numCromos + 1)) - cromosObtenidos)
-    )
-    precioMin = min(precioMin, costoSobres + costoCromos)
+for i in range(1, numSobres + 1):
+    sobre = map(int, input().split())
+
+    for cromo in sobre:
+        if not visto[cromo]:
+            visto[cromo] = True
+            faltantes -= preciosCromo[cromo]
+
+    precioMin = min(precioMin, i * precioSobre + faltantes)
 
 print(precioMin)
-
-
-# sobres = [[int(x) for x in input().split()] for _ in range(numSobres)]
-
-# faltantes = [True] * numCromos
-# valSobres = 0
-# resultados = []
-
-# for i in range(numSobres):
-#     valSobres += precioSobre
-
-#     for cromo in sobres[i]:
-#         faltantes[cromo - 1] = False
-
-#     valFaltantes = sum([j for idx, j in enumerate(preciosCromo) if faltantes[idx]])
-
-#     resultados.append(valSobres + valFaltantes)
-
-# print(min(resultados))
