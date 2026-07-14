@@ -1,7 +1,6 @@
 from collections import defaultdict
 import queue
 
-
 rooms, connec, nPortals = [int(x) for x in input().split()]
 
 

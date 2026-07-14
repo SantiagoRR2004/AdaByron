@@ -3,8 +3,6 @@ import random
 import sys
 import os
 
-
-
 currentDirectory = os.path.dirname(os.path.abspath(__file__))
 repoRoot = os.path.dirname(
     os.path.dirname(
@@ -17,7 +15,6 @@ repoRoot = os.path.dirname(
 SCRIPT = os.path.join(
     repoRoot, "solutions", "AdaByron", "Reg", "Galicia", "2026", "A", "A.py"
 )
-
 
 
 def test_a():

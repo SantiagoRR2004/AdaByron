@@ -1,6 +1,5 @@
 from collections import Counter
 
-
 palabras = input().split()
 
 freq = Counter(palabras)

@@ -68,7 +68,6 @@ while True:
     for j in range(nResultados):
         p1, op, p2 = next(inputIterator).strip().split()
 
-        
         if "=" == op:
             # The participants are equal
             dSet.union(int(p1), int(p2))

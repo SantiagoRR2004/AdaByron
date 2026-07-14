@@ -13,5 +13,4 @@ for _ in range(nCases):
     final += str(number)
     final = final[::-1]
 
-
     print(final)

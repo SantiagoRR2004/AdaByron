@@ -2,7 +2,6 @@
 
 import sys
 
-
 for line in sys.stdin:
     letters = {}
     for letter in line.strip():

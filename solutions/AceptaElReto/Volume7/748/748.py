@@ -22,4 +22,3 @@ while nOperation > 0:
 
     print("---")
     nOperation = int(input())
-

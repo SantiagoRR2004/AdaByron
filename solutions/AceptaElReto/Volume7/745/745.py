@@ -5,7 +5,7 @@ def excelTranslate(n):
     word = ""
     while n > 0:
         n -= 1
-        word = chr(ord('A') + n % 26) + word
+        word = chr(ord("A") + n % 26) + word
         n //= 26
     return word
 

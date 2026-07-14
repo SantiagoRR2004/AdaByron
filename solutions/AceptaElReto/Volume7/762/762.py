@@ -77,11 +77,9 @@ def longitud_max(
     """
     angleFactor = 1 + 1 / (pendiente * pendiente)
     distanciaEfectiva = (
-        pendiente * ancho2
-        + ancho1
-        - anchObjeto * pow(pendiente ** 2 + 1, 0.5)
+        pendiente * ancho2 + ancho1 - anchObjeto * pow(pendiente**2 + 1, 0.5)
     )
-    distanciaEfectiva = distanciaEfectiva ** 2
+    distanciaEfectiva = distanciaEfectiva**2
     return pow(angleFactor * distanciaEfectiva, 0.5)
 
 

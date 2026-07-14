@@ -34,7 +34,7 @@ while queue:
             # print(set(tableroUnos))
             # print(set(plantillaUnos))
             # print(set(tableroUnos) & set(plantillaUnos))
-            print(len(tableroUnos)- len(set(tableroUnos) & set(plantillaUnos)))
+            print(len(tableroUnos) - len(set(tableroUnos) & set(plantillaUnos)))
         else:
             print(dist + len(tableroUnos) - 1)
         break

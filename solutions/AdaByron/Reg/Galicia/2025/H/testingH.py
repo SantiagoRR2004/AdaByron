@@ -2,7 +2,6 @@ import subprocess
 import random
 import os
 
-
 currentDirectory = os.path.dirname(os.path.abspath(__file__))
 files = ["H.py", "H0.py"]
 

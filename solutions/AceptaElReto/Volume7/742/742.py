@@ -24,4 +24,3 @@ for i in range(n):
         print("No girar")
     else:
         print("Girar")
-
